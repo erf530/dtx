@@ -1,21 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 import { DataProps } from '../types';
-import { Permutation } from '../Permutation/Permutation';
+import { SelectCard } from '../Card/SelectCard';
+import { Card } from '../Card/Card';
+import styled, { css } from 'styled-components/macro';
 
 type Props = {
+  toggleSelected?: (id: string) => void,
   options: DataProps[],
-  selectPermutation: (details: DataProps) => void,
+  isViewPage?: boolean,
 };
 
-export const PermutationList = ({ options, selectPermutation }: Props) => {
+
+const styledContainer = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 40px;
+
+`
+
+export const PermutationContainer = ({ options, toggleSelected, isViewPage }: Props) => {
+
   return (
-    <div>
+    <div css={styledContainer}>
       {options.map(option => {
         return (
-          <Permutation selectPermutation={selectPermutation} key={option.id} details={option} />
-        )
-      })
-      }
+          <Fragment>
+            {!isViewPage && !!toggleSelected && (
+              <SelectCard
+                toggleSelected={toggleSelected}
+                key={option.id}
+                details={option}
+              />
+
+            )}
+            {isViewPage && (
+              <Card
+                key={option.id}
+                details={option}
+              />
+
+            )}
+          </Fragment>)
+      })}
+
     </div>
   )
 

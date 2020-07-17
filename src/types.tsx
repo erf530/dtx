@@ -6,4 +6,5 @@ export type DataProps = {
   name: string,
   time_stamp: Date,
   variables: string[],
+  selected?: boolean
 }
